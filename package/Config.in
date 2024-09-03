@@ -2334,6 +2334,11 @@ menu "Mail"
 	source "package/sylpheed/Config.in"
 endmenu
 
+menu "Custom"
+	source "package/test-package/Config.in"
+	source "package/ptrauth/Config.in"
+endmenu
+
 menu "Miscellaneous"
 	source "package/aespipe/Config.in"
 	source "package/bc/Config.in"

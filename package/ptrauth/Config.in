@@ -1,0 +1,4 @@
+config BR2_PACKAGE_PTRAUTH
+	bool "ptrauth"
+	help
+	  Pointer auth module implementation.

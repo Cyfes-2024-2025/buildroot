@@ -1,0 +1,1 @@
+savedcmd_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/Module.symvers :=  scripts/mod/modpost -M        -o /home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/Module.symvers -n -T /home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/modules.order -i Module.symvers -e 
