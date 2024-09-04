@@ -7,5 +7,5 @@ all:
 	make -C $(KERNEL_SOURCES) M=$(PWD) modules
 
 clean:
-	make -C $(KERNEL_SOURCES) M=$(PWD) clean
+	rm -rf ./cache *.cmd *.ko *.order *.o *.mod *.mod.c *.symvers
 

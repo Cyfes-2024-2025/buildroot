@@ -12,8 +12,16 @@
 #include <linux/cdev.h>
 #include <linux/fs.h>
 
+// mmap
+#include <linux/mm.h>
+#include <asm/io.h>
+
+// Kprobes
+#include <linux/kprobes.h>
+
 // Utilities
 #include <linux/errno.h>
+
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Pietro");
@@ -22,7 +30,7 @@ MODULE_VERSION("0.1");
 
 #define DRIVER_NAME "ptrauth"
 #define DEVICE_NAME "ptrauth"
-#define CLASS_NAME "ptrauth"
+#define CLASS_NAME "cfi_devices"
 
 #define PTRAUTH_DEBUG
 
@@ -40,10 +48,14 @@ MODULE_VERSION("0.1");
 static int ptrauth_probe(struct platform_device *pdev);
 static int ptrauth_remove(struct platform_device *pdev);
 
+
 static int ptrauth_open(struct inode*, struct file*);
 static ssize_t ptrauth_read(struct file*, char*, size_t, loff_t*);
 static ssize_t ptrauth_write(struct file*, const char*, size_t, loff_t*);
 static int ptrauth_release(struct inode*, struct file*);
+static int ptrauth_mmap(struct file *fp, struct vm_area_struct *vma);
+
+void ptrauth_sched_switch_probe(void *ignore, bool preempt, struct task_struct *prev, struct task_struct *next);
 
 static char *ptrauth_devnode(const struct device *dev, umode_t *mode);
 
@@ -72,7 +84,8 @@ static struct file_operations fops = {
     .read = ptrauth_read,
     .write = ptrauth_write,
     .open = ptrauth_open,
-    .release = ptrauth_release
+    .release = ptrauth_release,
+    .mmap = ptrauth_mmap
 };
 
 static int ptrauth_open(struct inode *inod, struct file *fp) {
@@ -130,6 +143,54 @@ static int ptrauth_remove(struct platform_device *pdev) {
     return 0;
 }
 
+static int ptrauth_mmap(struct file *fp, struct vm_area_struct *vma) {
+    int status;
+
+    vma->vm_pgoff = 0x80000000llu >> PAGE_SHIFT;
+    pa_info("[mmap] address: %lx\n", vma->vm_pgoff);
+
+    status = remap_pfn_range(vma, vma->vm_start, vma->vm_pgoff, vma->vm_end - vma->vm_start,vma->vm_page_prot);
+
+    if (status != 0) {
+        pa_err("[mmap] cannot remap address space: %d\n", status);
+        return -EAGAIN;
+    }
+    return 0;
+}
+
+// ==== Kprobes ====
+
+static int ptrauth_sched_ret(struct kretprobe_instance *ri, struct pt_regs *regs);
+static int ptrauth_sched_entry(struct kretprobe_instance *ri, struct pt_regs *regs);
+
+static struct kretprobe kret = {
+    .handler = ptrauth_sched_ret,
+    .entry_handler = ptrauth_sched_entry,
+};
+
+static int ptrauth_sched_ret(struct kretprobe_instance *ri, struct pt_regs *regs) {
+    // pa_info("[sched_ret] after: %d", current->pid);
+    return 0;
+}
+
+static int ptrauth_sched_entry(struct kretprobe_instance *ri, struct pt_regs *regs) {
+    // pa_info("[sched_entry] before: %d", current->pid);
+    return 0;
+}
+
+
+static int ptrauth_register_probe(void) {
+    kret.kp.symbol_name = "schedule";
+    int ret = register_kretprobe(&kret);
+    if (ret < 0) {
+        pa_info("[register_probe] register_kprobe failed, returned %d\n", ret);
+        return ret;
+    }
+
+
+    return 0;
+}
+
 // ==== Initialization and Deinitialization ====
 
 static char *ptrauth_devnode(const struct device *dev, umode_t *mode) {
@@ -141,6 +202,7 @@ static char *ptrauth_devnode(const struct device *dev, umode_t *mode) {
 
     return NULL;
 }
+
 
 static int __init ptrauth_init(void) {
     pa_info("[init] starting up...\n");
@@ -211,6 +273,10 @@ static int __init ptrauth_init(void) {
     global_device.plaintext = global_device.base_addr + 0x1010;
     global_device.tweak = global_device.base_addr + 0x1018;
     global_device.ciphertext = global_device.base_addr + 0x1020;
+
+    if (ptrauth_register_probe() != 0) {
+        return -1;
+    }
 
     pa_info("[init] all done!\n");
     return 0;
