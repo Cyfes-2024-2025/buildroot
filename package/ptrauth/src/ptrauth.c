@@ -1,3 +1,5 @@
+#include "linux/ioport.h"
+#include "linux/platform_device.h"
 #include <linux/kernel.h>
 #include <linux/module.h>
 
@@ -62,6 +64,12 @@ static char *ptrauth_devnode(const struct device *dev, umode_t *mode);
 // ==== Character Device ====
 
 static struct ptrauth_device {
+    uint64_t priviledged_start;
+    uint64_t priviledged_size;
+
+    uint64_t unpriviledged_start;
+    uint64_t unpriviledged_size;
+
     void __iomem *base_addr;
     void __iomem *key_high;
     void __iomem *key_low;
@@ -115,7 +123,7 @@ static int ptrauth_release(struct inode *inod, struct file *fp) {
 
 // ==== Platform Device ====
 static struct of_device_id pa_driver_of_match[] = {
-	{ .compatible = "todo,Todo-1.0", },
+	{ .compatible = "daem,PtrauthDevice-1.0", },
 	{},
 };
 
@@ -135,6 +143,23 @@ static struct platform_driver pa_driver = {
 
 // TODO: Implement
 static int ptrauth_probe(struct platform_device *pdev) {
+    struct resource *regs_first, *regs_second;
+
+    pa_info("[probe] device found\n");
+
+    regs_first = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+    regs_second = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+
+    global_device.priviledged_start = regs_first->start;
+    global_device.priviledged_size  = regs_first->end - regs_first->start + 1;
+
+    global_device.unpriviledged_start = regs_second->start;
+    global_device.unpriviledged_size  = regs_second->end - regs_second->start + 1;
+
+    pa_info("[probe] priv: { start: %llx, size: %llx }, unpriv: {start: %llx, size: %llx }\n",
+            global_device.priviledged_start, global_device.priviledged_size,
+            global_device.unpriviledged_start, global_device.unpriviledged_size);
+
     return 0;
 }
 
