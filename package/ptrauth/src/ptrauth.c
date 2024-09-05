@@ -171,7 +171,7 @@ static int ptrauth_remove(struct platform_device *pdev) {
 static int ptrauth_mmap(struct file *fp, struct vm_area_struct *vma) {
     int status;
 
-    vma->vm_pgoff = 0x80000000llu >> PAGE_SHIFT;
+    vma->vm_pgoff = global_device.unpriviledged_start >> PAGE_SHIFT;
     pa_info("[mmap] address: %lx\n", vma->vm_pgoff);
 
     status = remap_pfn_range(vma, vma->vm_start, vma->vm_pgoff, vma->vm_end - vma->vm_start,vma->vm_page_prot);
@@ -282,22 +282,6 @@ static int __init ptrauth_init(void) {
         pa_err("[init] cannot initializing platform driver\n");
         return -1;
     }
-
-    // NOTE: This should not be done here
-    const uint64_t start = 0x80000000;
-    const uint64_t size  = 0x00002000;
-    global_device.base_addr = ioremap(start, size);
-    if (!global_device.base_addr) {
-        pa_err("[init] cannot allocate iomem\n");
-        return -EIO;
-    }
-
-    global_device.key_low = global_device.base_addr;
-    global_device.key_high = global_device.base_addr + 0x8;
-
-    global_device.plaintext = global_device.base_addr + 0x1010;
-    global_device.tweak = global_device.base_addr + 0x1018;
-    global_device.ciphertext = global_device.base_addr + 0x1020;
 
     if (ptrauth_register_probe() != 0) {
         return -1;
