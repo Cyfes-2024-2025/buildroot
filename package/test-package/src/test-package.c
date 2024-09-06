@@ -18,6 +18,7 @@ int main(void) {
     uint64_t encrypted_pointer;
     uint64_t decrypted_pointer;
     uint64_t tmp;
+    int pid = getpid();
 
     uint64_t original_pointer = 0xABAB;
 
@@ -30,23 +31,24 @@ int main(void) {
     encrypted_pointer = *ciphertext;
     tmp = *ciphertext;
 
-    printf("Original  pointer: %016llx\n", original_pointer);
-    printf("Encrypted pointer: %016llx (second read: %016llx)\n", encrypted_pointer, tmp);
+    printf("[%d] Original  pointer: %016llx\n", pid, original_pointer);
+    printf("[%d] Encrypted pointer: %016llx (second read: %016llx)\n", pid, encrypted_pointer, tmp);
+    sleep(2);
 
     *tweak = 0x10;
     *ciphertext = encrypted_pointer;
     decrypted_pointer = *ciphertext;
     tmp = *ciphertext;
 
-    printf("Decrypted pointer: %016llx (second read: %016llx)\n", decrypted_pointer, tmp);
+    printf("[%d] Decrypted pointer: %016llx (second read: %016llx)\n", pid, decrypted_pointer, tmp);
 
     encrypted_pointer += 0x10;
     *tweak = 0x10;
     *ciphertext = encrypted_pointer;
     decrypted_pointer = *ciphertext;
 
-    printf("Modified encrypter pointer: %016llx\n", encrypted_pointer);
-    printf("Decrypted modified encrypter pointer: %016llx\n", decrypted_pointer);
+    printf("[%d] Modified encrypter pointer: %016llx\n", pid, encrypted_pointer);
+    printf("[%d] Decrypted modified encrypter pointer: %016llx\n", pid,  decrypted_pointer);
 
     printf("Closing Device\n");
     close(fd);

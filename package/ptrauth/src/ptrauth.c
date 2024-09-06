@@ -1,5 +1,6 @@
 #include "linux/ioport.h"
 #include "linux/platform_device.h"
+#include "linux/random.h"
 #include <linux/kernel.h>
 #include <linux/module.h>
 
@@ -47,9 +48,11 @@ MODULE_VERSION("0.1");
 
 // ==== Forward Declarations ====
 
+static void ptrauth_set_key(uint64_t key_low, uint64_t key_high);
+static void ptrauth_clear_ciphertext(void);
+
 static int ptrauth_probe(struct platform_device *pdev);
 static int ptrauth_remove(struct platform_device *pdev);
-
 
 static int ptrauth_open(struct inode*, struct file*);
 static ssize_t ptrauth_read(struct file*, char*, size_t, loff_t*);
@@ -61,6 +64,19 @@ void ptrauth_sched_switch_probe(void *ignore, bool preempt, struct task_struct *
 
 static char *ptrauth_devnode(const struct device *dev, umode_t *mode);
 
+// ==== Test ====
+
+struct ptrauth_process_info {
+    int pid;
+    uint64_t key_low;
+    uint64_t key_high;
+    bool valid;
+};
+
+#define MAX_PROCESS 256
+
+static struct ptrauth_process_info process_table[MAX_PROCESS] = {0};
+
 // ==== Character Device ====
 
 static struct ptrauth_device {
@@ -70,10 +86,11 @@ static struct ptrauth_device {
     uint64_t unpriviledged_start;
     uint64_t unpriviledged_size;
 
-    void __iomem *base_addr;
+    void __iomem *priviledged_base;
     void __iomem *key_high;
     void __iomem *key_low;
 
+    void __iomem *unpriviledged_base;
     void __iomem *plaintext;
     void __iomem *tweak;
     void __iomem *ciphertext;
@@ -96,8 +113,64 @@ static struct file_operations fops = {
     .mmap = ptrauth_mmap
 };
 
+static void ptrauth_set_key(uint64_t key_low, uint64_t key_high) {
+    if (key_low != 0) {
+        pa_info("[set_key] setting key 0x%016llx%016llx (pid = %d)", key_low, key_high, current->pid);
+    }
+    writeq(key_low, global_device.key_low);
+    writeq(key_high, global_device.key_high);
+}
+
+static void ptrauth_clear_ciphertext(void) {
+    (void)readq(global_device.ciphertext);
+}
+
 static int ptrauth_open(struct inode *inod, struct file *fp) {
     pa_info("[open] fp open\n");
+    int process_index = -1;
+
+    for (int i = 0; i < MAX_PROCESS; i++) {
+        if (!process_table[i].valid) {
+            process_table[i].valid = true;
+            process_index = i;
+            break;
+        }
+    }
+
+    if (process_index == -1) {
+        pa_err("[open] too many processess open, cannot allocate new one.");
+        return -EMFILE;
+    }
+
+    pa_info("[open] assigning index %d to process %d\n", process_index, current->pid);
+
+    // Generate a new random key
+    get_random_bytes(&process_table[process_index].key_low, sizeof(uint64_t));
+    get_random_bytes(&process_table[process_index].key_high, sizeof(uint64_t));
+
+    process_table[process_index].pid = current->pid;
+
+    ptrauth_set_key(process_table[process_index].key_low, process_table[process_index].key_high);
+
+    return 0;
+}
+
+static int ptrauth_release(struct inode *inod, struct file *fp) {
+    ptrauth_clear_ciphertext();
+    ptrauth_set_key(0, 0);
+
+    pa_info("[release] freeing process %d\n", current->pid);
+    for (int i = 0; i < MAX_PROCESS; i++) {
+        if (process_table[i].pid == current->pid && process_table[i].valid) {
+            process_table[i].valid = false;
+            process_table[i].key_high = 0;
+            process_table[i].key_low = 0;
+
+            pa_info("[release] freed index %d\n", i);
+            break;
+        }
+    }
+
     return 0;
 }
 
@@ -116,12 +189,9 @@ static ssize_t ptrauth_write(struct file *fp, const char *user_buffer, size_t us
     return 0;
 }
 
-static int ptrauth_release(struct inode *inod, struct file *fp) {
-    pa_info("[open] fp closed\n");
-    return 0;
-}
 
 // ==== Platform Device ====
+
 static struct of_device_id pa_driver_of_match[] = {
 	{ .compatible = "daem,PtrauthDevice-1.0", },
 	{},
@@ -141,13 +211,12 @@ static struct platform_driver pa_driver = {
 };
 
 
-// TODO: Implement
 static int ptrauth_probe(struct platform_device *pdev) {
     struct resource *regs_first, *regs_second;
 
     pa_info("[probe] device found\n");
 
-    regs_first = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+    regs_first  = platform_get_resource(pdev, IORESOURCE_MEM, 0);
     regs_second = platform_get_resource(pdev, IORESOURCE_MEM, 1);
 
     global_device.priviledged_start = regs_first->start;
@@ -155,6 +224,16 @@ static int ptrauth_probe(struct platform_device *pdev) {
 
     global_device.unpriviledged_start = regs_second->start;
     global_device.unpriviledged_size  = regs_second->end - regs_second->start + 1;
+
+    global_device.priviledged_base = ioremap(global_device.priviledged_start, global_device.priviledged_size);
+    global_device.unpriviledged_base = ioremap(global_device.unpriviledged_start, global_device.unpriviledged_size);
+
+    global_device.key_low  = global_device.priviledged_base;
+    global_device.key_high = global_device.priviledged_base + 0x8;
+
+    global_device.plaintext  = global_device.unpriviledged_base + 0x10;
+    global_device.tweak      = global_device.unpriviledged_base + 0x18;
+    global_device.ciphertext = global_device.unpriviledged_base + 0x20;
 
     pa_info("[probe] priv: { start: %llx, size: %llx }, unpriv: {start: %llx, size: %llx }\n",
             global_device.priviledged_start, global_device.priviledged_size,
@@ -191,10 +270,30 @@ static int ptrauth_sched_entry(struct kretprobe_instance *ri, struct pt_regs *re
 static struct kretprobe kret = {
     .handler = ptrauth_sched_ret,
     .entry_handler = ptrauth_sched_entry,
+    .maxactive = MAX_PROCESS,
 };
 
 static int ptrauth_sched_ret(struct kretprobe_instance *ri, struct pt_regs *regs) {
-    // pa_info("[sched_ret] after: %d", current->pid);
+    ptrauth_clear_ciphertext();
+
+    // if (current->pid > 105) {
+    //     pa_info("[sched_ret] Scheduling pid %d\n", current->pid);
+    // }
+
+    if (kret.nmissed > 0) {
+        pa_info("[sched_ret] missed %d schedules\n", kret.nmissed);
+    }
+
+    for (int i = 0; i < MAX_PROCESS; i++) {
+        if (process_table[i].pid == current->pid && process_table[i].valid) {
+            ptrauth_set_key(process_table[i].key_low, process_table[i].key_high);
+
+            return 0;
+        }
+    }
+
+    ptrauth_set_key(0, 0);
+
     return 0;
 }
 
@@ -205,13 +304,12 @@ static int ptrauth_sched_entry(struct kretprobe_instance *ri, struct pt_regs *re
 
 
 static int ptrauth_register_probe(void) {
-    kret.kp.symbol_name = "schedule";
+    kret.kp.symbol_name = "__switch_to";
     int ret = register_kretprobe(&kret);
     if (ret < 0) {
         pa_info("[register_probe] register_kprobe failed, returned %d\n", ret);
         return ret;
     }
-
 
     return 0;
 }

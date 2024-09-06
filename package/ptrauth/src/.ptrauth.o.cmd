@@ -29,51 +29,19 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/ARM64_PTR_AUTH_KERNEL) \
     $(wildcard include/config/ARM64_PTR_AUTH) \
     $(wildcard include/config/BUILTIN_RETURN_ADDRESS_STRIPS_PAC) \
-  include/linux/kernel.h \
-    $(wildcard include/config/PREEMPT_VOLUNTARY_BUILD) \
-    $(wildcard include/config/PREEMPT_DYNAMIC) \
-    $(wildcard include/config/HAVE_PREEMPT_DYNAMIC_CALL) \
-    $(wildcard include/config/HAVE_PREEMPT_DYNAMIC_KEY) \
-    $(wildcard include/config/PREEMPT_) \
-    $(wildcard include/config/DEBUG_ATOMIC_SLEEP) \
-    $(wildcard include/config/SMP) \
-    $(wildcard include/config/MMU) \
-    $(wildcard include/config/PROVE_LOCKING) \
-    $(wildcard include/config/TRACING) \
-    $(wildcard include/config/FTRACE_MCOUNT_RECORD) \
-  include/linux/stdarg.h \
-  include/linux/align.h \
+  include/linux/ioport.h \
+    $(wildcard include/config/MEMORY_HOTREMOVE) \
+    $(wildcard include/config/MEMORY_HOTPLUG) \
+  include/linux/bits.h \
   include/linux/const.h \
   include/vdso/const.h \
   include/uapi/linux/const.h \
-  include/linux/limits.h \
-  include/uapi/linux/limits.h \
-  include/linux/types.h \
-    $(wildcard include/config/HAVE_UID16) \
-    $(wildcard include/config/UID16) \
-    $(wildcard include/config/ARCH_DMA_ADDR_T_64BIT) \
-    $(wildcard include/config/PHYS_ADDR_T_64BIT) \
-    $(wildcard include/config/64BIT) \
-    $(wildcard include/config/ARCH_32BIT_USTAT_F_TINODE) \
-  include/uapi/linux/types.h \
-  arch/arm64/include/generated/uapi/asm/types.h \
-  include/uapi/asm-generic/types.h \
-  include/asm-generic/int-ll64.h \
-  include/uapi/asm-generic/int-ll64.h \
+  include/vdso/bits.h \
   arch/arm64/include/uapi/asm/bitsperlong.h \
   include/asm-generic/bitsperlong.h \
+    $(wildcard include/config/64BIT) \
   include/uapi/asm-generic/bitsperlong.h \
-  include/uapi/linux/posix_types.h \
-  include/linux/stddef.h \
-  include/uapi/linux/stddef.h \
-  arch/arm64/include/uapi/asm/posix_types.h \
-  include/uapi/asm-generic/posix_types.h \
-  include/vdso/limits.h \
-  include/linux/linkage.h \
-    $(wildcard include/config/ARCH_USE_SYM_ANNOTATIONS) \
-  include/linux/stringify.h \
-  include/linux/export.h \
-    $(wildcard include/config/MODVERSIONS) \
+  include/linux/build_bug.h \
   include/linux/compiler.h \
     $(wildcard include/config/TRACE_BRANCH_PROFILING) \
     $(wildcard include/config/PROFILE_ALL_BRANCHES) \
@@ -85,67 +53,69 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
   include/linux/kasan-checks.h \
     $(wildcard include/config/KASAN_GENERIC) \
     $(wildcard include/config/KASAN_SW_TAGS) \
+  include/linux/types.h \
+    $(wildcard include/config/HAVE_UID16) \
+    $(wildcard include/config/UID16) \
+    $(wildcard include/config/ARCH_DMA_ADDR_T_64BIT) \
+    $(wildcard include/config/PHYS_ADDR_T_64BIT) \
+    $(wildcard include/config/ARCH_32BIT_USTAT_F_TINODE) \
+  include/uapi/linux/types.h \
+  arch/arm64/include/generated/uapi/asm/types.h \
+  include/uapi/asm-generic/types.h \
+  include/asm-generic/int-ll64.h \
+  include/uapi/asm-generic/int-ll64.h \
+  include/uapi/linux/posix_types.h \
+  include/linux/stddef.h \
+  include/uapi/linux/stddef.h \
+  arch/arm64/include/uapi/asm/posix_types.h \
+  include/uapi/asm-generic/posix_types.h \
   include/linux/kcsan-checks.h \
     $(wildcard include/config/KCSAN) \
     $(wildcard include/config/KCSAN_WEAK_MEMORY) \
     $(wildcard include/config/KCSAN_IGNORE_ATOMICS) \
-  arch/arm64/include/asm/linkage.h \
-  include/linux/container_of.h \
-  include/linux/build_bug.h \
-  include/linux/bitops.h \
-  include/linux/bits.h \
-  include/vdso/bits.h \
-  include/linux/typecheck.h \
-  include/uapi/linux/kernel.h \
-  include/uapi/linux/sysinfo.h \
-  include/asm-generic/bitops/generic-non-atomic.h \
-  arch/arm64/include/asm/barrier.h \
-    $(wildcard include/config/ARM64_PSEUDO_NMI) \
-  arch/arm64/include/asm/alternative-macros.h \
-  arch/arm64/include/generated/asm/cpucaps.h \
-  arch/arm64/include/asm/insn-def.h \
-  arch/arm64/include/asm/brk-imm.h \
-  include/asm-generic/barrier.h \
-  arch/arm64/include/asm/bitops.h \
-  include/asm-generic/bitops/builtin-__ffs.h \
-  include/asm-generic/bitops/builtin-ffs.h \
-  include/asm-generic/bitops/builtin-__fls.h \
-  include/asm-generic/bitops/builtin-fls.h \
-  include/asm-generic/bitops/ffz.h \
-  include/asm-generic/bitops/fls64.h \
-  include/asm-generic/bitops/sched.h \
-  include/asm-generic/bitops/hweight.h \
-  include/asm-generic/bitops/arch_hweight.h \
-  include/asm-generic/bitops/const_hweight.h \
-  include/asm-generic/bitops/atomic.h \
-  include/linux/atomic.h \
-  arch/arm64/include/asm/atomic.h \
-  arch/arm64/include/asm/cmpxchg.h \
-  arch/arm64/include/asm/lse.h \
-    $(wildcard include/config/ARM64_LSE_ATOMICS) \
-  arch/arm64/include/asm/atomic_ll_sc.h \
-    $(wildcard include/config/CC_HAS_K_CONSTRAINT) \
-  arch/arm64/include/asm/alternative.h \
-    $(wildcard include/config/MODULES) \
-  include/linux/init.h \
-    $(wildcard include/config/HAVE_ARCH_PREL32_RELOCATIONS) \
-    $(wildcard include/config/STRICT_KERNEL_RWX) \
-    $(wildcard include/config/STRICT_MODULE_RWX) \
-    $(wildcard include/config/LTO_CLANG) \
-  arch/arm64/include/asm/atomic_lse.h \
-  include/linux/atomic/atomic-arch-fallback.h \
-    $(wildcard include/config/GENERIC_ATOMIC64) \
-  include/linux/atomic/atomic-long.h \
-  include/linux/atomic/atomic-instrumented.h \
-  include/linux/instrumented.h \
-  include/linux/kmsan-checks.h \
-    $(wildcard include/config/KMSAN) \
-  include/asm-generic/bitops/instrumented-atomic.h \
-  include/asm-generic/bitops/lock.h \
-  include/asm-generic/bitops/instrumented-lock.h \
-  include/asm-generic/bitops/non-atomic.h \
-  include/asm-generic/bitops/non-instrumented-non-atomic.h \
-  include/asm-generic/bitops/le.h \
+  include/linux/minmax.h \
+  include/linux/platform_device.h \
+    $(wildcard include/config/HAS_IOMEM) \
+    $(wildcard include/config/SUSPEND) \
+    $(wildcard include/config/HIBERNATE_CALLBACKS) \
+    $(wildcard include/config/PM_SLEEP) \
+    $(wildcard include/config/SUPERH) \
+  include/linux/device.h \
+    $(wildcard include/config/GENERIC_MSI_IRQ) \
+    $(wildcard include/config/ENERGY_MODEL) \
+    $(wildcard include/config/PINCTRL) \
+    $(wildcard include/config/DMA_OPS) \
+    $(wildcard include/config/DMA_DECLARE_COHERENT) \
+    $(wildcard include/config/DMA_CMA) \
+    $(wildcard include/config/SWIOTLB) \
+    $(wildcard include/config/SWIOTLB_DYNAMIC) \
+    $(wildcard include/config/NUMA) \
+    $(wildcard include/config/ARCH_HAS_SYNC_DMA_FOR_DEVICE) \
+    $(wildcard include/config/ARCH_HAS_SYNC_DMA_FOR_CPU) \
+    $(wildcard include/config/ARCH_HAS_SYNC_DMA_FOR_CPU_ALL) \
+    $(wildcard include/config/DMA_OPS_BYPASS) \
+    $(wildcard include/config/OF) \
+    $(wildcard include/config/LOCKDEP) \
+    $(wildcard include/config/DEVTMPFS) \
+  include/linux/dev_printk.h \
+    $(wildcard include/config/PRINTK) \
+    $(wildcard include/config/DYNAMIC_DEBUG) \
+    $(wildcard include/config/DYNAMIC_DEBUG_CORE) \
+  include/linux/ratelimit.h \
+  include/linux/ratelimit_types.h \
+  include/uapi/linux/param.h \
+  arch/arm64/include/uapi/asm/param.h \
+  include/asm-generic/param.h \
+    $(wildcard include/config/HZ) \
+  include/uapi/asm-generic/param.h \
+  include/linux/spinlock_types_raw.h \
+    $(wildcard include/config/SMP) \
+    $(wildcard include/config/DEBUG_SPINLOCK) \
+    $(wildcard include/config/DEBUG_LOCK_ALLOC) \
+  arch/arm64/include/asm/spinlock_types.h \
+  include/asm-generic/qspinlock_types.h \
+    $(wildcard include/config/NR_CPUS) \
+  include/asm-generic/qrwlock_types.h \
   arch/arm64/include/uapi/asm/byteorder.h \
   include/linux/byteorder/little_endian.h \
   include/uapi/linux/byteorder/little_endian.h \
@@ -154,233 +124,12 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
   arch/arm64/include/generated/uapi/asm/swab.h \
   include/uapi/asm-generic/swab.h \
   include/linux/byteorder/generic.h \
-  include/asm-generic/bitops/ext2-atomic-setbit.h \
-  include/linux/hex.h \
-  include/linux/kstrtox.h \
-  include/linux/log2.h \
-    $(wildcard include/config/ARCH_HAS_ILOG2_U32) \
-    $(wildcard include/config/ARCH_HAS_ILOG2_U64) \
-  include/linux/math.h \
-  arch/arm64/include/generated/asm/div64.h \
-  include/asm-generic/div64.h \
-  include/linux/minmax.h \
-  include/linux/panic.h \
-    $(wildcard include/config/PANIC_TIMEOUT) \
-  include/linux/printk.h \
-    $(wildcard include/config/MESSAGE_LOGLEVEL_DEFAULT) \
-    $(wildcard include/config/CONSOLE_LOGLEVEL_DEFAULT) \
-    $(wildcard include/config/CONSOLE_LOGLEVEL_QUIET) \
-    $(wildcard include/config/EARLY_PRINTK) \
-    $(wildcard include/config/PRINTK) \
-    $(wildcard include/config/PRINTK_INDEX) \
-    $(wildcard include/config/DYNAMIC_DEBUG) \
-    $(wildcard include/config/DYNAMIC_DEBUG_CORE) \
-  include/linux/kern_levels.h \
-  include/linux/ratelimit_types.h \
-  include/uapi/linux/param.h \
-  arch/arm64/include/uapi/asm/param.h \
-  include/asm-generic/param.h \
-    $(wildcard include/config/HZ) \
-  include/uapi/asm-generic/param.h \
-  include/linux/spinlock_types_raw.h \
-    $(wildcard include/config/DEBUG_SPINLOCK) \
-    $(wildcard include/config/DEBUG_LOCK_ALLOC) \
-  arch/arm64/include/asm/spinlock_types.h \
-  include/asm-generic/qspinlock_types.h \
-    $(wildcard include/config/NR_CPUS) \
-  include/asm-generic/qrwlock_types.h \
   include/linux/lockdep_types.h \
     $(wildcard include/config/PROVE_RAW_LOCK_NESTING) \
-    $(wildcard include/config/LOCKDEP) \
     $(wildcard include/config/LOCK_STAT) \
-  include/linux/once_lite.h \
-  include/linux/sprintf.h \
-  include/linux/static_call_types.h \
-    $(wildcard include/config/HAVE_STATIC_CALL) \
-    $(wildcard include/config/HAVE_STATIC_CALL_INLINE) \
-  include/linux/instruction_pointer.h \
-  include/linux/module.h \
-    $(wildcard include/config/SYSFS) \
-    $(wildcard include/config/MODULES_TREE_LOOKUP) \
-    $(wildcard include/config/LIVEPATCH) \
-    $(wildcard include/config/STACKTRACE_BUILD_ID) \
-    $(wildcard include/config/ARCH_USES_CFI_TRAPS) \
-    $(wildcard include/config/MODULE_SIG) \
-    $(wildcard include/config/GENERIC_BUG) \
-    $(wildcard include/config/KALLSYMS) \
-    $(wildcard include/config/TRACEPOINTS) \
-    $(wildcard include/config/TREE_SRCU) \
-    $(wildcard include/config/BPF_EVENTS) \
-    $(wildcard include/config/DEBUG_INFO_BTF_MODULES) \
-    $(wildcard include/config/JUMP_LABEL) \
-    $(wildcard include/config/EVENT_TRACING) \
-    $(wildcard include/config/KPROBES) \
-    $(wildcard include/config/KUNIT) \
-    $(wildcard include/config/MODULE_UNLOAD) \
-    $(wildcard include/config/CONSTRUCTORS) \
-    $(wildcard include/config/FUNCTION_ERROR_INJECTION) \
-  include/linux/list.h \
-    $(wildcard include/config/LIST_HARDENED) \
-    $(wildcard include/config/DEBUG_LIST) \
-  include/linux/poison.h \
-    $(wildcard include/config/ILLEGAL_POINTER_VALUE) \
-  include/linux/stat.h \
-  arch/arm64/include/asm/stat.h \
-    $(wildcard include/config/COMPAT) \
-  arch/arm64/include/generated/uapi/asm/stat.h \
-  include/uapi/asm-generic/stat.h \
-  include/linux/time.h \
-    $(wildcard include/config/POSIX_TIMERS) \
-  include/linux/cache.h \
-    $(wildcard include/config/ARCH_HAS_CACHE_LINE_SIZE) \
-  arch/arm64/include/asm/cache.h \
-    $(wildcard include/config/KASAN_HW_TAGS) \
-  include/linux/kasan-enabled.h \
-    $(wildcard include/config/KASAN) \
-  include/linux/static_key.h \
-  include/linux/jump_label.h \
-    $(wildcard include/config/HAVE_ARCH_JUMP_LABEL_RELATIVE) \
-  include/linux/bug.h \
-    $(wildcard include/config/BUG_ON_DATA_CORRUPTION) \
-  arch/arm64/include/asm/bug.h \
-  arch/arm64/include/asm/asm-bug.h \
-    $(wildcard include/config/DEBUG_BUGVERBOSE) \
-  include/asm-generic/bug.h \
-    $(wildcard include/config/BUG) \
-    $(wildcard include/config/GENERIC_BUG_RELATIVE_POINTERS) \
-  include/linux/instrumentation.h \
-    $(wildcard include/config/NOINSTR_VALIDATION) \
-  arch/arm64/include/asm/cputype.h \
-  arch/arm64/include/asm/sysreg.h \
-    $(wildcard include/config/BROKEN_GAS_INST) \
-    $(wildcard include/config/ARM64_PA_BITS_52) \
-    $(wildcard include/config/ARM64_4K_PAGES) \
-    $(wildcard include/config/ARM64_16K_PAGES) \
-    $(wildcard include/config/ARM64_64K_PAGES) \
-  include/linux/kasan-tags.h \
-  arch/arm64/include/asm/gpr-num.h \
-  arch/arm64/include/generated/asm/sysreg-defs.h \
-  include/linux/bitfield.h \
-  arch/arm64/include/asm/mte-def.h \
-  include/linux/math64.h \
-    $(wildcard include/config/ARCH_SUPPORTS_INT128) \
-  include/vdso/math64.h \
-  include/linux/time64.h \
-  include/vdso/time64.h \
-  include/uapi/linux/time.h \
-  include/uapi/linux/time_types.h \
-  include/linux/time32.h \
-  include/linux/timex.h \
-  include/uapi/linux/timex.h \
-  arch/arm64/include/asm/timex.h \
-  arch/arm64/include/asm/arch_timer.h \
-    $(wildcard include/config/ARM_ARCH_TIMER_OOL_WORKAROUND) \
-  arch/arm64/include/asm/hwcap.h \
-  arch/arm64/include/uapi/asm/hwcap.h \
-  arch/arm64/include/asm/cpufeature.h \
-    $(wildcard include/config/ARM64_PAN) \
-    $(wildcard include/config/ARM64_SW_TTBR0_PAN) \
-    $(wildcard include/config/ARM64_SVE) \
-    $(wildcard include/config/ARM64_SME) \
-    $(wildcard include/config/ARM64_CNP) \
-    $(wildcard include/config/ARM64_MTE) \
-    $(wildcard include/config/ARM64_DEBUG_PRIORITY_MASKING) \
-    $(wildcard include/config/ARM64_BTI) \
-    $(wildcard include/config/ARM64_TLB_RANGE) \
-    $(wildcard include/config/ARM64_PA_BITS) \
-    $(wildcard include/config/ARM64_HW_AFDBM) \
-    $(wildcard include/config/ARM64_AMU_EXTN) \
-  include/linux/smp.h \
-    $(wildcard include/config/UP_LATE_INIT) \
-    $(wildcard include/config/DEBUG_PREEMPT) \
-  include/linux/errno.h \
-  include/uapi/linux/errno.h \
-  arch/arm64/include/generated/uapi/asm/errno.h \
-  include/uapi/asm-generic/errno.h \
-  include/uapi/asm-generic/errno-base.h \
-  include/linux/cpumask.h \
-    $(wildcard include/config/FORCE_NR_CPUS) \
-    $(wildcard include/config/HOTPLUG_CPU) \
-    $(wildcard include/config/DEBUG_PER_CPU_MAPS) \
-    $(wildcard include/config/CPUMASK_OFFSTACK) \
-  include/linux/threads.h \
-    $(wildcard include/config/BASE_SMALL) \
-  include/linux/bitmap.h \
-  include/linux/find.h \
-  include/linux/string.h \
-    $(wildcard include/config/BINARY_PRINTF) \
-    $(wildcard include/config/FORTIFY_SOURCE) \
-  include/linux/err.h \
-  include/linux/overflow.h \
-  include/uapi/linux/string.h \
-  arch/arm64/include/asm/string.h \
-    $(wildcard include/config/ARCH_HAS_UACCESS_FLUSHCACHE) \
-  include/linux/gfp_types.h \
-  include/linux/numa.h \
-    $(wildcard include/config/NODES_SHIFT) \
-    $(wildcard include/config/NUMA_KEEP_MEMINFO) \
-    $(wildcard include/config/NUMA) \
-    $(wildcard include/config/HAVE_ARCH_NODE_DEV_GROUP) \
-  include/linux/smp_types.h \
-  include/linux/llist.h \
-    $(wildcard include/config/ARCH_HAVE_NMI_SAFE_CMPXCHG) \
-  include/linux/preempt.h \
-    $(wildcard include/config/PREEMPT_RT) \
-    $(wildcard include/config/PREEMPT_COUNT) \
-    $(wildcard include/config/TRACE_PREEMPT_TOGGLE) \
-    $(wildcard include/config/PREEMPTION) \
-    $(wildcard include/config/PREEMPT_NOTIFIERS) \
-  include/linux/cleanup.h \
-  arch/arm64/include/asm/preempt.h \
-  include/linux/thread_info.h \
-    $(wildcard include/config/THREAD_INFO_IN_TASK) \
-    $(wildcard include/config/GENERIC_ENTRY) \
-    $(wildcard include/config/HAVE_ARCH_WITHIN_STACK_FRAMES) \
-    $(wildcard include/config/HARDENED_USERCOPY) \
-    $(wildcard include/config/SH) \
-  include/linux/restart_block.h \
-  arch/arm64/include/asm/current.h \
-  arch/arm64/include/asm/thread_info.h \
-  arch/arm64/include/asm/memory.h \
-    $(wildcard include/config/ARM64_VA_BITS) \
-    $(wildcard include/config/KASAN_SHADOW_OFFSET) \
-    $(wildcard include/config/VMAP_STACK) \
-    $(wildcard include/config/RANDOMIZE_BASE) \
-    $(wildcard include/config/DEBUG_VIRTUAL) \
-    $(wildcard include/config/EFI) \
-    $(wildcard include/config/ARM_GIC_V3_ITS) \
-  include/linux/sizes.h \
-  arch/arm64/include/asm/page-def.h \
-    $(wildcard include/config/ARM64_PAGE_SHIFT) \
-  include/linux/mmdebug.h \
-    $(wildcard include/config/DEBUG_VM) \
-    $(wildcard include/config/DEBUG_VM_IRQSOFF) \
-    $(wildcard include/config/DEBUG_VM_PGFLAGS) \
-  arch/arm64/include/asm/boot.h \
-  include/asm-generic/memory_model.h \
-    $(wildcard include/config/FLATMEM) \
-    $(wildcard include/config/SPARSEMEM_VMEMMAP) \
-    $(wildcard include/config/SPARSEMEM) \
-  include/linux/pfn.h \
-  arch/arm64/include/asm/stack_pointer.h \
-  arch/arm64/include/asm/smp.h \
-    $(wildcard include/config/ARM64_ACPI_PARKING_PROTOCOL) \
-  arch/arm64/include/asm/percpu.h \
-  include/asm-generic/percpu.h \
-    $(wildcard include/config/HAVE_SETUP_PER_CPU_AREA) \
-  include/linux/percpu-defs.h \
-    $(wildcard include/config/DEBUG_FORCE_WEAK_PER_CPU) \
-    $(wildcard include/config/AMD_MEM_ENCRYPT) \
-  include/clocksource/arm_arch_timer.h \
-    $(wildcard include/config/ARM_ARCH_TIMER) \
-  include/linux/timecounter.h \
-  include/asm-generic/timex.h \
-  include/vdso/time32.h \
-  include/vdso/time.h \
-  arch/arm64/include/asm/compat.h \
-  include/asm-generic/compat.h \
-    $(wildcard include/config/COMPAT_FOR_U64_ALIGNMENT) \
   include/linux/sched.h \
+    $(wildcard include/config/DEBUG_ATOMIC_SLEEP) \
+    $(wildcard include/config/PREEMPT_RT) \
     $(wildcard include/config/VIRT_CPU_ACCOUNTING_NATIVE) \
     $(wildcard include/config/SCHED_INFO) \
     $(wildcard include/config/SCHEDSTATS) \
@@ -391,7 +140,9 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/UCLAMP_TASK) \
     $(wildcard include/config/UCLAMP_BUCKETS_COUNT) \
     $(wildcard include/config/KMAP_LOCAL) \
+    $(wildcard include/config/THREAD_INFO_IN_TASK) \
     $(wildcard include/config/CGROUP_SCHED) \
+    $(wildcard include/config/PREEMPT_NOTIFIERS) \
     $(wildcard include/config/BLK_DEV_IO_TRACE) \
     $(wildcard include/config/PREEMPT_RCU) \
     $(wildcard include/config/TASKS_RCU) \
@@ -428,15 +179,23 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/CPUSETS) \
     $(wildcard include/config/X86_CPU_RESCTRL) \
     $(wildcard include/config/FUTEX) \
+    $(wildcard include/config/COMPAT) \
     $(wildcard include/config/PERF_EVENTS) \
+    $(wildcard include/config/DEBUG_PREEMPT) \
     $(wildcard include/config/NUMA_BALANCING) \
     $(wildcard include/config/RSEQ) \
     $(wildcard include/config/SCHED_MM_CID) \
     $(wildcard include/config/FAULT_INJECTION) \
     $(wildcard include/config/LATENCYTOP) \
+    $(wildcard include/config/KMSAN) \
+    $(wildcard include/config/KUNIT) \
     $(wildcard include/config/FUNCTION_GRAPH_TRACER) \
+    $(wildcard include/config/TRACING) \
     $(wildcard include/config/UPROBES) \
     $(wildcard include/config/BCACHE) \
+    $(wildcard include/config/MMU) \
+    $(wildcard include/config/VMAP_STACK) \
+    $(wildcard include/config/LIVEPATCH) \
     $(wildcard include/config/SECURITY) \
     $(wildcard include/config/BPF_SYSCALL) \
     $(wildcard include/config/GCC_PLUGIN_STACKLEAK) \
@@ -447,44 +206,274 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/RV) \
     $(wildcard include/config/USER_EVENTS) \
     $(wildcard include/config/ARCH_TASK_STRUCT_ON_STACK) \
+    $(wildcard include/config/PREEMPTION) \
+    $(wildcard include/config/PREEMPT_DYNAMIC) \
+    $(wildcard include/config/HAVE_PREEMPT_DYNAMIC_CALL) \
+    $(wildcard include/config/HAVE_PREEMPT_DYNAMIC_KEY) \
     $(wildcard include/config/PREEMPT_NONE) \
     $(wildcard include/config/PREEMPT_VOLUNTARY) \
     $(wildcard include/config/PREEMPT) \
     $(wildcard include/config/DEBUG_RSEQ) \
   include/uapi/linux/sched.h \
+  arch/arm64/include/asm/current.h \
   include/linux/pid.h \
   include/linux/rculist.h \
     $(wildcard include/config/PROVE_RCU_LIST) \
+  include/linux/list.h \
+    $(wildcard include/config/LIST_HARDENED) \
+    $(wildcard include/config/DEBUG_LIST) \
+  include/linux/container_of.h \
+  include/linux/poison.h \
+    $(wildcard include/config/ILLEGAL_POINTER_VALUE) \
+  arch/arm64/include/asm/barrier.h \
+    $(wildcard include/config/ARM64_PSEUDO_NMI) \
+  arch/arm64/include/asm/alternative-macros.h \
+  arch/arm64/include/generated/asm/cpucaps.h \
+  arch/arm64/include/asm/insn-def.h \
+  arch/arm64/include/asm/brk-imm.h \
+  include/linux/stringify.h \
+  include/asm-generic/barrier.h \
   include/linux/rcupdate.h \
     $(wildcard include/config/TINY_RCU) \
     $(wildcard include/config/RCU_STRICT_GRACE_PERIOD) \
     $(wildcard include/config/RCU_LAZY) \
     $(wildcard include/config/TASKS_RCU_GENERIC) \
     $(wildcard include/config/RCU_STALL_COMMON) \
+    $(wildcard include/config/GENERIC_ENTRY) \
     $(wildcard include/config/KVM_XFER_TO_GUEST_WORK) \
     $(wildcard include/config/RCU_NOCB_CPU) \
     $(wildcard include/config/TASKS_RUDE_RCU) \
     $(wildcard include/config/TREE_RCU) \
     $(wildcard include/config/DEBUG_OBJECTS_RCU_HEAD) \
+    $(wildcard include/config/HOTPLUG_CPU) \
     $(wildcard include/config/PROVE_RCU) \
     $(wildcard include/config/ARCH_WEAK_RELEASE_ACQUIRE) \
+  include/linux/atomic.h \
+  arch/arm64/include/asm/atomic.h \
+  arch/arm64/include/asm/cmpxchg.h \
+  arch/arm64/include/asm/lse.h \
+    $(wildcard include/config/ARM64_LSE_ATOMICS) \
+  arch/arm64/include/asm/atomic_ll_sc.h \
+    $(wildcard include/config/CC_HAS_K_CONSTRAINT) \
+  include/linux/export.h \
+    $(wildcard include/config/MODVERSIONS) \
+  include/linux/linkage.h \
+    $(wildcard include/config/ARCH_USE_SYM_ANNOTATIONS) \
+  arch/arm64/include/asm/linkage.h \
+  arch/arm64/include/asm/alternative.h \
+    $(wildcard include/config/MODULES) \
+  include/linux/init.h \
+    $(wildcard include/config/HAVE_ARCH_PREL32_RELOCATIONS) \
+    $(wildcard include/config/STRICT_KERNEL_RWX) \
+    $(wildcard include/config/STRICT_MODULE_RWX) \
+    $(wildcard include/config/LTO_CLANG) \
+  arch/arm64/include/asm/atomic_lse.h \
+  include/linux/atomic/atomic-arch-fallback.h \
+    $(wildcard include/config/GENERIC_ATOMIC64) \
+  include/linux/atomic/atomic-long.h \
+  include/linux/atomic/atomic-instrumented.h \
+  include/linux/instrumented.h \
+  include/linux/kmsan-checks.h \
   include/linux/irqflags.h \
+    $(wildcard include/config/PROVE_LOCKING) \
     $(wildcard include/config/IRQSOFF_TRACER) \
     $(wildcard include/config/PREEMPT_TRACER) \
     $(wildcard include/config/DEBUG_IRQFLAGS) \
     $(wildcard include/config/TRACE_IRQFLAGS_SUPPORT) \
+  include/linux/typecheck.h \
+  include/linux/cleanup.h \
   arch/arm64/include/asm/irqflags.h \
+    $(wildcard include/config/ARM64_DEBUG_PRIORITY_MASKING) \
   arch/arm64/include/asm/ptrace.h \
+  arch/arm64/include/asm/cpufeature.h \
+    $(wildcard include/config/ARM64_PAN) \
+    $(wildcard include/config/ARM64_SW_TTBR0_PAN) \
+    $(wildcard include/config/ARM64_SVE) \
+    $(wildcard include/config/ARM64_SME) \
+    $(wildcard include/config/ARM64_CNP) \
+    $(wildcard include/config/ARM64_MTE) \
+    $(wildcard include/config/ARM64_BTI) \
+    $(wildcard include/config/ARM64_TLB_RANGE) \
+    $(wildcard include/config/ARM64_PA_BITS) \
+    $(wildcard include/config/ARM64_HW_AFDBM) \
+    $(wildcard include/config/ARM64_AMU_EXTN) \
+  arch/arm64/include/asm/cputype.h \
+  arch/arm64/include/asm/sysreg.h \
+    $(wildcard include/config/BROKEN_GAS_INST) \
+    $(wildcard include/config/ARM64_PA_BITS_52) \
+    $(wildcard include/config/ARM64_4K_PAGES) \
+    $(wildcard include/config/ARM64_16K_PAGES) \
+    $(wildcard include/config/ARM64_64K_PAGES) \
+    $(wildcard include/config/KASAN_HW_TAGS) \
+  include/linux/kasan-tags.h \
+  arch/arm64/include/asm/gpr-num.h \
+  arch/arm64/include/generated/asm/sysreg-defs.h \
+  include/linux/bitfield.h \
+  arch/arm64/include/asm/hwcap.h \
+  arch/arm64/include/uapi/asm/hwcap.h \
+  include/linux/log2.h \
+    $(wildcard include/config/ARCH_HAS_ILOG2_U32) \
+    $(wildcard include/config/ARCH_HAS_ILOG2_U64) \
+  include/linux/bitops.h \
+  include/uapi/linux/kernel.h \
+  include/uapi/linux/sysinfo.h \
+  include/asm-generic/bitops/generic-non-atomic.h \
+  arch/arm64/include/asm/bitops.h \
+  include/asm-generic/bitops/builtin-__ffs.h \
+  include/asm-generic/bitops/builtin-ffs.h \
+  include/asm-generic/bitops/builtin-__fls.h \
+  include/asm-generic/bitops/builtin-fls.h \
+  include/asm-generic/bitops/ffz.h \
+  include/asm-generic/bitops/fls64.h \
+  include/asm-generic/bitops/sched.h \
+  include/asm-generic/bitops/hweight.h \
+  include/asm-generic/bitops/arch_hweight.h \
+  include/asm-generic/bitops/const_hweight.h \
+  include/asm-generic/bitops/atomic.h \
+  include/asm-generic/bitops/instrumented-atomic.h \
+  include/asm-generic/bitops/lock.h \
+  include/asm-generic/bitops/instrumented-lock.h \
+  include/asm-generic/bitops/non-atomic.h \
+  include/asm-generic/bitops/non-instrumented-non-atomic.h \
+  include/asm-generic/bitops/le.h \
+  include/asm-generic/bitops/ext2-atomic-setbit.h \
+  include/linux/bug.h \
+    $(wildcard include/config/GENERIC_BUG) \
+    $(wildcard include/config/BUG_ON_DATA_CORRUPTION) \
+  arch/arm64/include/asm/bug.h \
+  arch/arm64/include/asm/asm-bug.h \
+    $(wildcard include/config/DEBUG_BUGVERBOSE) \
+  include/asm-generic/bug.h \
+    $(wildcard include/config/BUG) \
+    $(wildcard include/config/GENERIC_BUG_RELATIVE_POINTERS) \
+  include/linux/instrumentation.h \
+    $(wildcard include/config/NOINSTR_VALIDATION) \
+  include/linux/once_lite.h \
+  include/linux/panic.h \
+    $(wildcard include/config/PANIC_TIMEOUT) \
+  include/linux/printk.h \
+    $(wildcard include/config/MESSAGE_LOGLEVEL_DEFAULT) \
+    $(wildcard include/config/CONSOLE_LOGLEVEL_DEFAULT) \
+    $(wildcard include/config/CONSOLE_LOGLEVEL_QUIET) \
+    $(wildcard include/config/EARLY_PRINTK) \
+    $(wildcard include/config/PRINTK_INDEX) \
+  include/linux/stdarg.h \
+  include/linux/kern_levels.h \
+  include/linux/jump_label.h \
+    $(wildcard include/config/JUMP_LABEL) \
+    $(wildcard include/config/HAVE_ARCH_JUMP_LABEL_RELATIVE) \
+  include/linux/kernel.h \
+    $(wildcard include/config/PREEMPT_VOLUNTARY_BUILD) \
+    $(wildcard include/config/PREEMPT_) \
+    $(wildcard include/config/FTRACE_MCOUNT_RECORD) \
+  include/linux/align.h \
+  include/linux/limits.h \
+  include/uapi/linux/limits.h \
+  include/vdso/limits.h \
+  include/linux/hex.h \
+  include/linux/kstrtox.h \
+  include/linux/math.h \
+  arch/arm64/include/generated/asm/div64.h \
+  include/asm-generic/div64.h \
+  include/linux/sprintf.h \
+  include/linux/static_call_types.h \
+    $(wildcard include/config/HAVE_STATIC_CALL) \
+    $(wildcard include/config/HAVE_STATIC_CALL_INLINE) \
+  include/linux/instruction_pointer.h \
   arch/arm64/include/uapi/asm/ptrace.h \
   arch/arm64/include/uapi/asm/sve_context.h \
+  arch/arm64/include/asm/percpu.h \
+  include/linux/preempt.h \
+    $(wildcard include/config/PREEMPT_COUNT) \
+    $(wildcard include/config/TRACE_PREEMPT_TOGGLE) \
+  arch/arm64/include/asm/preempt.h \
+  include/linux/thread_info.h \
+    $(wildcard include/config/HAVE_ARCH_WITHIN_STACK_FRAMES) \
+    $(wildcard include/config/HARDENED_USERCOPY) \
+    $(wildcard include/config/SH) \
+  include/linux/restart_block.h \
+  include/linux/time64.h \
+  include/linux/math64.h \
+    $(wildcard include/config/ARCH_SUPPORTS_INT128) \
+  include/vdso/math64.h \
+  include/vdso/time64.h \
+  include/uapi/linux/time.h \
+  include/uapi/linux/time_types.h \
+  include/linux/errno.h \
+  include/uapi/linux/errno.h \
+  arch/arm64/include/generated/uapi/asm/errno.h \
+  include/uapi/asm-generic/errno.h \
+  include/uapi/asm-generic/errno-base.h \
+  arch/arm64/include/asm/thread_info.h \
+  arch/arm64/include/asm/memory.h \
+    $(wildcard include/config/ARM64_VA_BITS) \
+    $(wildcard include/config/KASAN_SHADOW_OFFSET) \
+    $(wildcard include/config/KASAN) \
+    $(wildcard include/config/RANDOMIZE_BASE) \
+    $(wildcard include/config/DEBUG_VIRTUAL) \
+    $(wildcard include/config/EFI) \
+    $(wildcard include/config/ARM_GIC_V3_ITS) \
+  include/linux/sizes.h \
+  arch/arm64/include/asm/page-def.h \
+    $(wildcard include/config/ARM64_PAGE_SHIFT) \
+  include/linux/mmdebug.h \
+    $(wildcard include/config/DEBUG_VM) \
+    $(wildcard include/config/DEBUG_VM_IRQSOFF) \
+    $(wildcard include/config/DEBUG_VM_PGFLAGS) \
+  arch/arm64/include/asm/boot.h \
+  include/asm-generic/memory_model.h \
+    $(wildcard include/config/FLATMEM) \
+    $(wildcard include/config/SPARSEMEM_VMEMMAP) \
+    $(wildcard include/config/SPARSEMEM) \
+  include/linux/pfn.h \
+  arch/arm64/include/asm/stack_pointer.h \
+  include/asm-generic/percpu.h \
+    $(wildcard include/config/HAVE_SETUP_PER_CPU_AREA) \
+  include/linux/threads.h \
+    $(wildcard include/config/BASE_SMALL) \
+  include/linux/percpu-defs.h \
+    $(wildcard include/config/DEBUG_FORCE_WEAK_PER_CPU) \
+    $(wildcard include/config/AMD_MEM_ENCRYPT) \
   include/linux/bottom_half.h \
   include/linux/lockdep.h \
     $(wildcard include/config/DEBUG_LOCKING_API_SELFTESTS) \
+  include/linux/smp.h \
+    $(wildcard include/config/UP_LATE_INIT) \
+  include/linux/cpumask.h \
+    $(wildcard include/config/FORCE_NR_CPUS) \
+    $(wildcard include/config/DEBUG_PER_CPU_MAPS) \
+    $(wildcard include/config/CPUMASK_OFFSTACK) \
+  include/linux/bitmap.h \
+  include/linux/find.h \
+  include/linux/string.h \
+    $(wildcard include/config/BINARY_PRINTF) \
+    $(wildcard include/config/FORTIFY_SOURCE) \
+  include/linux/err.h \
+  include/linux/overflow.h \
+  include/uapi/linux/string.h \
+  arch/arm64/include/asm/string.h \
+    $(wildcard include/config/ARCH_HAS_UACCESS_FLUSHCACHE) \
+  include/linux/gfp_types.h \
+  include/linux/numa.h \
+    $(wildcard include/config/NODES_SHIFT) \
+    $(wildcard include/config/NUMA_KEEP_MEMINFO) \
+    $(wildcard include/config/HAVE_ARCH_NODE_DEV_GROUP) \
+  include/linux/smp_types.h \
+  include/linux/llist.h \
+    $(wildcard include/config/ARCH_HAVE_NMI_SAFE_CMPXCHG) \
+  arch/arm64/include/asm/smp.h \
+    $(wildcard include/config/ARM64_ACPI_PARKING_PROTOCOL) \
   arch/arm64/include/asm/processor.h \
     $(wildcard include/config/KUSER_HELPERS) \
     $(wildcard include/config/ARM64_FORCE_52BIT) \
     $(wildcard include/config/HAVE_HW_BREAKPOINT) \
     $(wildcard include/config/ARM64_TAGGED_ADDR_ABI) \
+  include/linux/cache.h \
+    $(wildcard include/config/ARCH_HAS_CACHE_LINE_SIZE) \
+  arch/arm64/include/asm/cache.h \
+  include/linux/kasan-enabled.h \
+  include/linux/static_key.h \
+  arch/arm64/include/asm/mte-def.h \
   include/vdso/processor.h \
   arch/arm64/include/asm/vdso/processor.h \
   arch/arm64/include/asm/hw_breakpoint.h \
@@ -587,10 +576,25 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
   include/linux/workqueue.h \
     $(wildcard include/config/DEBUG_OBJECTS_WORK) \
     $(wildcard include/config/FREEZER) \
+    $(wildcard include/config/SYSFS) \
     $(wildcard include/config/WQ_WATCHDOG) \
   include/linux/timer.h \
     $(wildcard include/config/DEBUG_OBJECTS_TIMERS) \
   include/linux/ktime.h \
+  include/linux/time.h \
+    $(wildcard include/config/POSIX_TIMERS) \
+  include/linux/time32.h \
+  include/linux/timex.h \
+  include/uapi/linux/timex.h \
+  arch/arm64/include/asm/timex.h \
+  arch/arm64/include/asm/arch_timer.h \
+    $(wildcard include/config/ARM_ARCH_TIMER_OOL_WORKAROUND) \
+  include/clocksource/arm_arch_timer.h \
+    $(wildcard include/config/ARM_ARCH_TIMER) \
+  include/linux/timecounter.h \
+  include/asm-generic/timex.h \
+  include/vdso/time32.h \
+  include/vdso/time.h \
   include/linux/jiffies.h \
   include/vdso/jiffies.h \
   include/generated/timeconst.h \
@@ -681,25 +685,53 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
   arch/arm64/include/generated/asm/kmap_size.h \
   include/asm-generic/kmap_size.h \
     $(wildcard include/config/DEBUG_KMAP_LOCAL) \
-  include/linux/sched/task_stack.h \
-    $(wildcard include/config/STACK_GROWSUP) \
-    $(wildcard include/config/DEBUG_STACK_USAGE) \
-  include/uapi/linux/magic.h \
-  include/uapi/linux/stat.h \
-  include/linux/buildid.h \
-    $(wildcard include/config/CRASH_CORE) \
+  include/linux/energy_model.h \
+  include/linux/kobject.h \
+    $(wildcard include/config/UEVENT_HELPER) \
+    $(wildcard include/config/DEBUG_KOBJECT_RELEASE) \
+  include/linux/sysfs.h \
+  include/linux/kernfs.h \
+    $(wildcard include/config/KERNFS) \
+  include/linux/idr.h \
+  include/linux/radix-tree.h \
+  include/linux/xarray.h \
+    $(wildcard include/config/XARRAY_MULTI) \
+  include/linux/gfp.h \
+    $(wildcard include/config/ZONE_DMA) \
+    $(wildcard include/config/ZONE_DMA32) \
+    $(wildcard include/config/ZONE_DEVICE) \
+    $(wildcard include/config/CONTIG_ALLOC) \
+  include/linux/mmzone.h \
+    $(wildcard include/config/ARCH_FORCE_MAX_ORDER) \
+    $(wildcard include/config/CMA) \
+    $(wildcard include/config/MEMORY_ISOLATION) \
+    $(wildcard include/config/ZSMALLOC) \
+    $(wildcard include/config/UNACCEPTED_MEMORY) \
+    $(wildcard include/config/SWAP) \
+    $(wildcard include/config/TRANSPARENT_HUGEPAGE) \
+    $(wildcard include/config/LRU_GEN_STATS) \
+    $(wildcard include/config/MEMORY_FAILURE) \
+    $(wildcard include/config/PAGE_EXTENSION) \
+    $(wildcard include/config/DEFERRED_STRUCT_PAGE_INIT) \
+    $(wildcard include/config/HAVE_MEMORYLESS_NODES) \
+    $(wildcard include/config/SPARSEMEM_EXTREME) \
+    $(wildcard include/config/HAVE_ARCH_PFN_VALID) \
+  include/linux/list_nulls.h \
+  include/linux/pageblock-flags.h \
+    $(wildcard include/config/HUGETLB_PAGE) \
+    $(wildcard include/config/HUGETLB_PAGE_SIZE_VARIABLE) \
+  include/linux/page-flags-layout.h \
+  include/generated/bounds.h \
+  arch/arm64/include/asm/sparsemem.h \
   include/linux/mm_types.h \
     $(wildcard include/config/HAVE_ALIGNED_STRUCT_PAGE) \
     $(wildcard include/config/USERFAULTFD) \
     $(wildcard include/config/PER_VMA_LOCK) \
     $(wildcard include/config/ANON_VMA_NAME) \
-    $(wildcard include/config/SWAP) \
     $(wildcard include/config/HAVE_ARCH_COMPAT_MMAP_BASES) \
     $(wildcard include/config/MEMBARRIER) \
     $(wildcard include/config/AIO) \
     $(wildcard include/config/MMU_NOTIFIER) \
-    $(wildcard include/config/TRANSPARENT_HUGEPAGE) \
-    $(wildcard include/config/HUGETLB_PAGE) \
     $(wildcard include/config/KSM) \
   include/linux/auxvec.h \
   include/uapi/linux/auxvec.h \
@@ -714,35 +746,8 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
   include/linux/completion.h \
   include/linux/swait.h \
   include/linux/uprobes.h \
-  include/linux/page-flags-layout.h \
-  include/generated/bounds.h \
-  arch/arm64/include/asm/sparsemem.h \
   include/linux/percpu_counter.h \
   arch/arm64/include/asm/mmu.h \
-  include/linux/kmod.h \
-  include/linux/umh.h \
-  include/linux/gfp.h \
-    $(wildcard include/config/ZONE_DMA) \
-    $(wildcard include/config/ZONE_DMA32) \
-    $(wildcard include/config/ZONE_DEVICE) \
-    $(wildcard include/config/CONTIG_ALLOC) \
-  include/linux/mmzone.h \
-    $(wildcard include/config/ARCH_FORCE_MAX_ORDER) \
-    $(wildcard include/config/CMA) \
-    $(wildcard include/config/MEMORY_ISOLATION) \
-    $(wildcard include/config/ZSMALLOC) \
-    $(wildcard include/config/UNACCEPTED_MEMORY) \
-    $(wildcard include/config/LRU_GEN_STATS) \
-    $(wildcard include/config/MEMORY_HOTPLUG) \
-    $(wildcard include/config/MEMORY_FAILURE) \
-    $(wildcard include/config/PAGE_EXTENSION) \
-    $(wildcard include/config/DEFERRED_STRUCT_PAGE_INIT) \
-    $(wildcard include/config/HAVE_MEMORYLESS_NODES) \
-    $(wildcard include/config/SPARSEMEM_EXTREME) \
-    $(wildcard include/config/HAVE_ARCH_PFN_VALID) \
-  include/linux/list_nulls.h \
-  include/linux/pageblock-flags.h \
-    $(wildcard include/config/HUGETLB_PAGE_SIZE_VARIABLE) \
   include/linux/page-flags.h \
     $(wildcard include/config/ARCH_USES_PG_UNCACHED) \
     $(wildcard include/config/PAGE_IDLE_FLAG) \
@@ -753,8 +758,8 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
   include/linux/memory_hotplug.h \
     $(wildcard include/config/HAVE_ARCH_NODEDATA_EXTENSION) \
     $(wildcard include/config/ARCH_HAS_ADD_PAGES) \
-    $(wildcard include/config/MEMORY_HOTREMOVE) \
   include/linux/notifier.h \
+    $(wildcard include/config/TREE_SRCU) \
   include/linux/srcu.h \
     $(wildcard include/config/TINY_SRCU) \
     $(wildcard include/config/NEED_SRCU_NMI_SAFE) \
@@ -771,6 +776,62 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/GENERIC_ARCH_TOPOLOGY) \
   arch/arm64/include/asm/topology.h \
   include/asm-generic/topology.h \
+  include/linux/sched/mm.h \
+    $(wildcard include/config/MMU_LAZY_TLB_REFCOUNT) \
+    $(wildcard include/config/ARCH_HAS_MEMBARRIER_CALLBACKS) \
+  include/linux/sync_core.h \
+    $(wildcard include/config/ARCH_HAS_SYNC_CORE_BEFORE_USERMODE) \
+  include/linux/kobject_ns.h \
+  include/linux/stat.h \
+  arch/arm64/include/asm/stat.h \
+  arch/arm64/include/generated/uapi/asm/stat.h \
+  include/uapi/asm-generic/stat.h \
+  arch/arm64/include/asm/compat.h \
+  include/asm-generic/compat.h \
+    $(wildcard include/config/COMPAT_FOR_U64_ALIGNMENT) \
+  include/linux/sched/task_stack.h \
+    $(wildcard include/config/STACK_GROWSUP) \
+    $(wildcard include/config/DEBUG_STACK_USAGE) \
+  include/uapi/linux/magic.h \
+  include/uapi/linux/stat.h \
+  include/linux/sched/cpufreq.h \
+    $(wildcard include/config/CPU_FREQ) \
+  include/linux/sched/topology.h \
+    $(wildcard include/config/SCHED_DEBUG) \
+    $(wildcard include/config/SCHED_CLUSTER) \
+    $(wildcard include/config/SCHED_MC) \
+    $(wildcard include/config/CPU_FREQ_GOV_SCHEDUTIL) \
+  include/linux/sched/idle.h \
+  include/linux/sched/sd_flags.h \
+  include/linux/klist.h \
+  include/linux/pm.h \
+    $(wildcard include/config/VT_CONSOLE_SLEEP) \
+    $(wildcard include/config/CXL_SUSPEND) \
+    $(wildcard include/config/PM) \
+    $(wildcard include/config/PM_CLK) \
+    $(wildcard include/config/PM_GENERIC_DOMAINS) \
+  include/linux/device/bus.h \
+    $(wildcard include/config/ACPI) \
+  include/linux/device/class.h \
+  include/linux/device/driver.h \
+  include/linux/module.h \
+    $(wildcard include/config/MODULES_TREE_LOOKUP) \
+    $(wildcard include/config/STACKTRACE_BUILD_ID) \
+    $(wildcard include/config/ARCH_USES_CFI_TRAPS) \
+    $(wildcard include/config/MODULE_SIG) \
+    $(wildcard include/config/KALLSYMS) \
+    $(wildcard include/config/TRACEPOINTS) \
+    $(wildcard include/config/BPF_EVENTS) \
+    $(wildcard include/config/DEBUG_INFO_BTF_MODULES) \
+    $(wildcard include/config/EVENT_TRACING) \
+    $(wildcard include/config/KPROBES) \
+    $(wildcard include/config/MODULE_UNLOAD) \
+    $(wildcard include/config/CONSTRUCTORS) \
+    $(wildcard include/config/FUNCTION_ERROR_INJECTION) \
+  include/linux/buildid.h \
+    $(wildcard include/config/CRASH_CORE) \
+  include/linux/kmod.h \
+  include/linux/umh.h \
   include/linux/sysctl.h \
     $(wildcard include/config/SYSCTL) \
   include/uapi/linux/sysctl.h \
@@ -815,14 +876,6 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/MEMCG_KMEM) \
   include/linux/shrinker.h \
     $(wildcard include/config/SHRINKER_DEBUG) \
-  include/linux/xarray.h \
-    $(wildcard include/config/XARRAY_MULTI) \
-  include/linux/sched/mm.h \
-    $(wildcard include/config/MMU_LAZY_TLB_REFCOUNT) \
-    $(wildcard include/config/ARCH_HAS_MEMBARRIER_CALLBACKS) \
-  include/linux/sync_core.h \
-    $(wildcard include/config/ARCH_HAS_SYNC_CORE_BEFORE_USERMODE) \
-  include/linux/radix-tree.h \
   include/linux/capability.h \
   include/uapi/linux/capability.h \
   include/linux/semaphore.h \
@@ -869,7 +922,6 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/VFIO_PCI_ZDEV_KVM) \
     $(wildcard include/config/IOMMUFD) \
     $(wildcard include/config/WATCH_QUEUE) \
-  include/linux/ratelimit.h \
   include/linux/rcu_sync.h \
   include/linux/delayed_call.h \
   include/linux/uuid.h \
@@ -902,14 +954,6 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
   include/linux/dqblk_qtree.h \
   include/linux/projid.h \
   include/uapi/linux/quota.h \
-  include/linux/kobject.h \
-    $(wildcard include/config/UEVENT_HELPER) \
-    $(wildcard include/config/DEBUG_KOBJECT_RELEASE) \
-  include/linux/sysfs.h \
-  include/linux/kernfs.h \
-    $(wildcard include/config/KERNFS) \
-  include/linux/idr.h \
-  include/linux/kobject_ns.h \
   include/linux/moduleparam.h \
     $(wildcard include/config/ALPHA) \
     $(wildcard include/config/IA64) \
@@ -926,10 +970,10 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/HAVE_MOD_ARCH_SPECIFIC) \
     $(wildcard include/config/MODULES_USE_ELF_REL) \
     $(wildcard include/config/MODULES_USE_ELF_RELA) \
+  arch/arm64/include/asm/device.h \
+  include/linux/pm_wakeup.h \
   include/linux/of_address.h \
     $(wildcard include/config/OF_ADDRESS) \
-    $(wildcard include/config/OF) \
-  include/linux/ioport.h \
   include/linux/of.h \
     $(wildcard include/config/OF_DYNAMIC) \
     $(wildcard include/config/SPARC) \
@@ -993,50 +1037,6 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
   arch/arm64/include/asm/vmalloc.h \
     $(wildcard include/config/PTDUMP_DEBUGFS) \
   include/linux/of_device.h \
-  include/linux/platform_device.h \
-    $(wildcard include/config/HAS_IOMEM) \
-    $(wildcard include/config/SUSPEND) \
-    $(wildcard include/config/HIBERNATE_CALLBACKS) \
-    $(wildcard include/config/PM_SLEEP) \
-    $(wildcard include/config/SUPERH) \
-  include/linux/device.h \
-    $(wildcard include/config/GENERIC_MSI_IRQ) \
-    $(wildcard include/config/ENERGY_MODEL) \
-    $(wildcard include/config/PINCTRL) \
-    $(wildcard include/config/DMA_OPS) \
-    $(wildcard include/config/DMA_DECLARE_COHERENT) \
-    $(wildcard include/config/DMA_CMA) \
-    $(wildcard include/config/SWIOTLB) \
-    $(wildcard include/config/SWIOTLB_DYNAMIC) \
-    $(wildcard include/config/ARCH_HAS_SYNC_DMA_FOR_DEVICE) \
-    $(wildcard include/config/ARCH_HAS_SYNC_DMA_FOR_CPU) \
-    $(wildcard include/config/ARCH_HAS_SYNC_DMA_FOR_CPU_ALL) \
-    $(wildcard include/config/DMA_OPS_BYPASS) \
-    $(wildcard include/config/DEVTMPFS) \
-  include/linux/dev_printk.h \
-  include/linux/energy_model.h \
-  include/linux/sched/cpufreq.h \
-    $(wildcard include/config/CPU_FREQ) \
-  include/linux/sched/topology.h \
-    $(wildcard include/config/SCHED_DEBUG) \
-    $(wildcard include/config/SCHED_CLUSTER) \
-    $(wildcard include/config/SCHED_MC) \
-    $(wildcard include/config/CPU_FREQ_GOV_SCHEDUTIL) \
-  include/linux/sched/idle.h \
-  include/linux/sched/sd_flags.h \
-  include/linux/klist.h \
-  include/linux/pm.h \
-    $(wildcard include/config/VT_CONSOLE_SLEEP) \
-    $(wildcard include/config/CXL_SUSPEND) \
-    $(wildcard include/config/PM) \
-    $(wildcard include/config/PM_CLK) \
-    $(wildcard include/config/PM_GENERIC_DOMAINS) \
-  include/linux/device/bus.h \
-    $(wildcard include/config/ACPI) \
-  include/linux/device/class.h \
-  include/linux/device/driver.h \
-  arch/arm64/include/asm/device.h \
-  include/linux/pm_wakeup.h \
   include/linux/of_platform.h \
   include/linux/cdev.h \
   include/linux/mm.h \
@@ -1087,6 +1087,106 @@ deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o 
     $(wildcard include/config/MEMORY_BALLOON) \
     $(wildcard include/config/BALLOON_COMPACTION) \
     $(wildcard include/config/ZSWAP) \
+  include/linux/kprobes.h \
+    $(wildcard include/config/KRETPROBE_ON_RETHOOK) \
+    $(wildcard include/config/KPROBES_SANITY_TEST) \
+    $(wildcard include/config/OPTPROBES) \
+    $(wildcard include/config/KPROBES_ON_FTRACE) \
+  include/linux/ftrace.h \
+    $(wildcard include/config/HAVE_FUNCTION_GRAPH_RETVAL) \
+    $(wildcard include/config/FUNCTION_TRACER) \
+    $(wildcard include/config/HAVE_DYNAMIC_FTRACE_WITH_ARGS) \
+    $(wildcard include/config/DYNAMIC_FTRACE_WITH_REGS) \
+    $(wildcard include/config/DYNAMIC_FTRACE_WITH_ARGS) \
+    $(wildcard include/config/DYNAMIC_FTRACE_WITH_DIRECT_CALLS) \
+    $(wildcard include/config/STACK_TRACER) \
+    $(wildcard include/config/DYNAMIC_FTRACE_WITH_CALL_OPS) \
+    $(wildcard include/config/FRAME_POINTER) \
+    $(wildcard include/config/FUNCTION_GRAPH_RETVAL) \
+    $(wildcard include/config/FUNCTION_PROFILER) \
+    $(wildcard include/config/FTRACE_SYSCALLS) \
+  include/linux/trace_recursion.h \
+    $(wildcard include/config/FTRACE_RECORD_RECURSION) \
+    $(wildcard include/config/ARCH_WANTS_NO_INSTR) \
+  include/linux/interrupt.h \
+    $(wildcard include/config/IRQ_FORCED_THREADING) \
+    $(wildcard include/config/GENERIC_IRQ_PROBE) \
+    $(wildcard include/config/IRQ_TIMINGS) \
+  include/linux/irqreturn.h \
+  include/linux/hardirq.h \
+  include/linux/context_tracking_state.h \
+    $(wildcard include/config/CONTEXT_TRACKING_USER) \
+    $(wildcard include/config/CONTEXT_TRACKING) \
+  include/linux/ftrace_irq.h \
+    $(wildcard include/config/HWLAT_TRACER) \
+    $(wildcard include/config/OSNOISE_TRACER) \
+  include/linux/vtime.h \
+    $(wildcard include/config/VIRT_CPU_ACCOUNTING) \
+    $(wildcard include/config/IRQ_TIME_ACCOUNTING) \
+  arch/arm64/include/asm/hardirq.h \
+  arch/arm64/include/asm/irq.h \
+  include/asm-generic/irq.h \
+  arch/arm64/include/asm/kvm_arm.h \
+  arch/arm64/include/asm/esr.h \
+  include/asm-generic/hardirq.h \
+  include/linux/irq.h \
+    $(wildcard include/config/GENERIC_IRQ_EFFECTIVE_AFF_MASK) \
+    $(wildcard include/config/GENERIC_IRQ_IPI) \
+    $(wildcard include/config/IRQ_DOMAIN_HIERARCHY) \
+    $(wildcard include/config/DEPRECATED_IRQ_CPU_ONOFFLINE) \
+    $(wildcard include/config/GENERIC_IRQ_MIGRATION) \
+    $(wildcard include/config/GENERIC_PENDING_IRQ) \
+    $(wildcard include/config/HARDIRQS_SW_RESEND) \
+    $(wildcard include/config/GENERIC_IRQ_LEGACY) \
+    $(wildcard include/config/GENERIC_IRQ_MULTI_HANDLER) \
+  include/linux/irqhandler.h \
+  arch/arm64/include/generated/asm/irq_regs.h \
+  include/asm-generic/irq_regs.h \
+  include/linux/irqdesc.h \
+    $(wildcard include/config/GENERIC_IRQ_DEBUGFS) \
+    $(wildcard include/config/SPARSE_IRQ) \
+    $(wildcard include/config/IRQ_DOMAIN) \
+  arch/arm64/include/generated/asm/hw_irq.h \
+  include/asm-generic/hw_irq.h \
+  include/linux/trace_clock.h \
+  arch/arm64/include/generated/asm/trace_clock.h \
+  include/asm-generic/trace_clock.h \
+  include/linux/kallsyms.h \
+    $(wildcard include/config/KALLSYMS_ALL) \
+  include/linux/ptrace.h \
+  include/linux/pid_namespace.h \
+    $(wildcard include/config/MEMFD_CREATE) \
+    $(wildcard include/config/PID_NS) \
+  include/linux/nsproxy.h \
+  include/linux/ns_common.h \
+  include/uapi/linux/ptrace.h \
+  arch/arm64/include/asm/ftrace.h \
+  arch/arm64/include/asm/insn.h \
+  include/linux/compat.h \
+    $(wildcard include/config/ARCH_HAS_SYSCALL_WRAPPER) \
+    $(wildcard include/config/X86_X32_ABI) \
+    $(wildcard include/config/COMPAT_OLD_SIGACTION) \
+    $(wildcard include/config/ODD_RT_SIGACTION) \
+  include/linux/socket.h \
+  arch/arm64/include/generated/uapi/asm/socket.h \
+  include/uapi/asm-generic/socket.h \
+  arch/arm64/include/generated/uapi/asm/sockios.h \
+  include/uapi/asm-generic/sockios.h \
+  include/uapi/linux/sockios.h \
+  include/linux/uio.h \
+    $(wildcard include/config/ARCH_HAS_COPY_MC) \
+  include/uapi/linux/uio.h \
+  include/uapi/linux/socket.h \
+  include/uapi/linux/if.h \
+  include/uapi/linux/libc-compat.h \
+  include/uapi/linux/hdlc/ioctl.h \
+  include/uapi/linux/aio_abi.h \
+  arch/arm64/include/asm/syscall_wrapper.h \
+  include/linux/freelist.h \
+  include/linux/rethook.h \
+  arch/arm64/include/asm/kprobes.h \
+  include/asm-generic/kprobes.h \
+  arch/arm64/include/asm/probes.h \
 
 /home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o: $(deps_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o)
 
