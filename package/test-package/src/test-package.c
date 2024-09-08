@@ -1,7 +1,9 @@
+#include <string.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <stdint.h>
+#include <signal.h>
 #include <sys/mman.h>
 
 // ANSI Colors
@@ -26,7 +28,13 @@ uint64_t auth(uint64_t ptr, uint64_t tweak) {
     return  *(uint64_t*)(__global_ptrauth_device_base + 0x20);
 }
 
+static void signal_handler(int signo) {
+    signal(SIGUSR1, &signal_handler);
+    printf("[%d] Signal handler called! Signal: %s\n", getpid(), strsignal(signo));
+}
+
 void setup(void) {
+    signal(SIGUSR1, &signal_handler);
     printf("Opening device\n");
     int fd = open("/dev/ptrauth", O_RDWR);
 
@@ -43,13 +51,18 @@ int main(void) {
     uint64_t signed_ptr = sign(ptr, 0x10);
     printf("[%d] Signed pointer: %016llx\n", pid, signed_ptr);
 
-    sleep(2);
+    // sleep(2);
     uint64_t auth_ptr = auth(signed_ptr, 0x10);
 
+
     if (auth_ptr != ptr) {
-        printf(RED "[%d] Invalid auth pointer: %016llx\n" CRESET, auth_ptr, auth_ptr);
+        printf(RED "[%d] Invalid auth pointer: %016llx\n" CRESET, pid, auth_ptr);
     } else {
-        printf(GRN "[%d] Correct pointer!\n" CRESET, auth_ptr);
+        printf(GRN "[%d] Correct pointer!\n" CRESET, pid);
     }
+
+    printf("\n[%d] Trying to authenticate invalid signal\n", pid);
+    uint64_t auth_ptr_funny = auth(signed_ptr + 1, 0x10);
+    printf("[%d] Authenticated ptr (should be all zeros): %016llx\n", pid, auth_ptr_funny);
 
 }

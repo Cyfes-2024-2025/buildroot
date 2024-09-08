@@ -1,6 +1,10 @@
+#include "asm-generic/signal.h"
+#include "linux/interrupt.h"
 #include "linux/ioport.h"
+#include "linux/irqreturn.h"
 #include "linux/platform_device.h"
 #include "linux/random.h"
+#include "linux/sched/signal.h"
 #include <linux/kernel.h>
 #include <linux/module.h>
 
@@ -60,6 +64,8 @@ static ssize_t ptrauth_write(struct file*, const char*, size_t, loff_t*);
 static int ptrauth_release(struct inode*, struct file*);
 static int ptrauth_mmap(struct file *fp, struct vm_area_struct *vma);
 
+static irqreturn_t ptrauth_irq_handler(int irq, void *data);
+
 void ptrauth_sched_switch_probe(void *ignore, bool preempt, struct task_struct *prev, struct task_struct *next);
 
 static char *ptrauth_devnode(const struct device *dev, umode_t *mode);
@@ -89,6 +95,7 @@ static struct ptrauth_device {
     void __iomem *priviledged_base;
     void __iomem *key_high;
     void __iomem *key_low;
+    void __iomem *control;
 
     void __iomem *unpriviledged_base;
     void __iomem *plaintext;
@@ -115,7 +122,7 @@ static struct file_operations fops = {
 
 static void ptrauth_set_key(uint64_t key_low, uint64_t key_high) {
     if (key_low != 0) {
-        pa_info("[set_key] setting key 0x%016llx%016llx (pid = %d)", key_low, key_high, current->pid);
+        // pa_info("[set_key] setting key 0x%016llx%016llx (pid = %d)", key_low, key_high, current->pid);
     }
     writeq(key_low, global_device.key_low);
     writeq(key_high, global_device.key_high);
@@ -189,6 +196,19 @@ static ssize_t ptrauth_write(struct file *fp, const char *user_buffer, size_t us
     return 0;
 }
 
+// ==== Interrupts ====
+static irqreturn_t ptrauth_irq_handler(int irq, void *data) {
+    pa_info("[irq_handler] invalid pointer found.\n");
+
+    // Clear interrupt
+    writeq(1, global_device.control);
+
+    // Send SIGUSR1
+    kill_pid(find_vpid(current->pid), SIGUSR1, 0);
+
+    return IRQ_HANDLED;
+}
+
 
 // ==== Platform Device ====
 
@@ -213,11 +233,14 @@ static struct platform_driver pa_driver = {
 
 static int ptrauth_probe(struct platform_device *pdev) {
     struct resource *regs_first, *regs_second;
+    int irq;
 
     pa_info("[probe] device found\n");
 
     regs_first  = platform_get_resource(pdev, IORESOURCE_MEM, 0);
     regs_second = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+
+    irq = platform_get_irq(pdev, 0);
 
     global_device.priviledged_start = regs_first->start;
     global_device.priviledged_size  = regs_first->end - regs_first->start + 1;
@@ -230,6 +253,7 @@ static int ptrauth_probe(struct platform_device *pdev) {
 
     global_device.key_low  = global_device.priviledged_base;
     global_device.key_high = global_device.priviledged_base + 0x8;
+    global_device.control  = global_device.priviledged_base + 0x10;
 
     global_device.plaintext  = global_device.unpriviledged_base + 0x10;
     global_device.tweak      = global_device.unpriviledged_base + 0x18;
@@ -239,6 +263,13 @@ static int ptrauth_probe(struct platform_device *pdev) {
             global_device.priviledged_start, global_device.priviledged_size,
             global_device.unpriviledged_start, global_device.unpriviledged_size);
 
+    // register the interrupt
+    int rc = request_irq(irq, ptrauth_irq_handler, 0, DEVICE_NAME, &global_device);
+
+    if (rc) {
+        pa_err("[probe] cannot register request: %d\n", rc);
+        return -EIO;
+    }
     return 0;
 }
 
