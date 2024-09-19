@@ -23,7 +23,7 @@ else
 fi
 
 if ! ${mode_sys_qemu}; then
-    export PATH="/home/daem/polito/cyfes-qemu-setup/qemu/build/:${PATH}"
+    export PATH="$(realpath $(pwd)/../../..)/qemu/build/:${PATH}"
 fi
 
 exec qemu-system-aarch64 \
