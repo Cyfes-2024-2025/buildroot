@@ -1,4 +1,3 @@
-#include "asm-generic/signal.h"
 #include "linux/interrupt.h"
 #include "linux/ioport.h"
 #include "linux/irqreturn.h"
@@ -73,7 +72,7 @@ static char *ptrauth_devnode(const struct device *dev, umode_t *mode);
 // ==== Test ====
 
 struct ptrauth_process_info {
-    int pid;
+    pid_t pid;
     uint64_t key_low;
     uint64_t key_high;
     bool valid;
@@ -298,21 +297,24 @@ static int ptrauth_mmap(struct file *fp, struct vm_area_struct *vma) {
 static int ptrauth_sched_ret(struct kretprobe_instance *ri, struct pt_regs *regs);
 static int ptrauth_sched_entry(struct kretprobe_instance *ri, struct pt_regs *regs);
 
-static struct kretprobe kret = {
+static struct kretprobe kret_sched = {
     .handler = ptrauth_sched_ret,
     .entry_handler = ptrauth_sched_entry,
+    .maxactive = MAX_PROCESS,
+};
+
+static int ptrauth_fork_ret(struct kretprobe_instance *ri, struct pt_regs *regs);
+
+static struct kretprobe kret_fork = {
+    .handler = ptrauth_fork_ret,
     .maxactive = MAX_PROCESS,
 };
 
 static int ptrauth_sched_ret(struct kretprobe_instance *ri, struct pt_regs *regs) {
     ptrauth_clear_ciphertext();
 
-    // if (current->pid > 105) {
-    //     pa_info("[sched_ret] Scheduling pid %d\n", current->pid);
-    // }
-
-    if (kret.nmissed > 0) {
-        pa_info("[sched_ret] missed %d schedules\n", kret.nmissed);
+    if (kret_sched.nmissed > 0) {
+        pa_info("[sched_ret] missed %d schedules\n", kret_sched.nmissed);
     }
 
     for (int i = 0; i < MAX_PROCESS; i++) {
@@ -328,6 +330,41 @@ static int ptrauth_sched_ret(struct kretprobe_instance *ri, struct pt_regs *regs
     return 0;
 }
 
+static int ptrauth_fork_ret(struct kretprobe_instance *ri, struct pt_regs *regs) {
+    pid_t child = regs->regs[0];
+    pid_t parent = current->pid;
+
+    struct ptrauth_process_info *info = NULL;
+
+    // Find if parent has a registered key
+    for (int i = 0; i < MAX_PROCESS; i++) {
+        if (process_table[i].valid && process_table[i].pid == parent) {
+            info = &process_table[i];
+            break;
+        }
+    }
+
+    // Parent did not have keys, can return safely
+    if (info == NULL) {
+        return 0;
+    }
+
+    // Clone keys to children
+    for (int i = 0; i < MAX_PROCESS; i++) {
+        if (!process_table[i].valid) {
+            process_table[i].valid = true;
+            process_table[i].pid = child;
+            process_table[i].key_high = info->key_high;
+            process_table[i].key_low = info->key_low;
+            pa_info("[fork_ret] copied keys from pid %d to pid %d\n", parent, child);
+            return 0;
+        }
+    }
+
+    pa_err("[fork_ret] too may processes have a key");
+    return -ENOMEM;
+}
+
 static int ptrauth_sched_entry(struct kretprobe_instance *ri, struct pt_regs *regs) {
     // pa_info("[sched_entry] before: %d", current->pid);
     return 0;
@@ -335,10 +372,18 @@ static int ptrauth_sched_entry(struct kretprobe_instance *ri, struct pt_regs *re
 
 
 static int ptrauth_register_probe(void) {
-    kret.kp.symbol_name = "__switch_to";
-    int ret = register_kretprobe(&kret);
+    kret_sched.kp.symbol_name = "__switch_to";
+    int ret = register_kretprobe(&kret_sched);
     if (ret < 0) {
-        pa_info("[register_probe] register_kprobe failed, returned %d\n", ret);
+        pa_err("[register_probe] register_kprobe failed, returned %d\n", ret);
+        return ret;
+    }
+
+    pa_info("[register_probe] registering do_fork kretprobe\n");
+    kret_fork.kp.symbol_name = "kernel_clone";
+    ret = register_kretprobe(&kret_fork);
+    if (ret < 0) {
+        pa_err("[register_probe] register_kprobe failed, returned %d\n", ret);
         return ret;
     }
 

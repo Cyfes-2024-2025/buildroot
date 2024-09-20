@@ -42,6 +42,11 @@ void setup(void) {
     __global_ptrauth_device_base = mmap(NULL, 0x1000, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 }
 
+void child(void) {
+    printf("[%d] child process!\n", getpid());
+    return;
+}
+
 int main(void) {
     setup();
 
@@ -51,7 +56,7 @@ int main(void) {
     uint64_t signed_ptr = sign(ptr, 0x10);
     printf("[%d] Signed pointer: %016llx\n", pid, signed_ptr);
 
-    // sleep(2);
+    sleep(2);
     uint64_t auth_ptr = auth(signed_ptr, 0x10);
 
 

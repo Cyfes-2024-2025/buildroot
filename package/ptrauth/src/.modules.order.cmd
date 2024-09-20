@@ -1,1 +1,1 @@
-savedcmd_/home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/modules.order := {   echo /home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/ptrauth.o; :; } > /home/daem/polito/cyfes-qemu-setup/buildroot/package/ptrauth/src/modules.order
+savedcmd_/home/daem/polito/cyfes-demo/cyfes-project-cfi/buildroot/package/ptrauth/src/modules.order := {   echo /home/daem/polito/cyfes-demo/cyfes-project-cfi/buildroot/package/ptrauth/src/ptrauth.o; :; } > /home/daem/polito/cyfes-demo/cyfes-project-cfi/buildroot/package/ptrauth/src/modules.order
